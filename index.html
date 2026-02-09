@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="pageTitle">Test World</title>
+    <title data-lang="pageTitle">각종 테스트</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,10 +17,11 @@
                     <li><a href="#mbti" class="nav-link" data-page="mbti-page" data-lang="navMbti">MBTI 테스트</a></li>
                     <li><a href="#love-skill" class="nav-link" data-page="love-skill-page" data-lang="navLoveSkill">연애스킬 테스트</a></li>
                     <li><a href="#loner-power" class="nav-link" data-page="loner-power-page" data-lang="navLonerPower">찐따력 테스트</a></li>
+                    <li><a href="#fortune" class="nav-link" data-page="fortune-page" data-lang="navFortune">오늘의 운세</a></li>
                 </ul>
             </nav>
         </div>
-        <a href="#home" class="logo" data-lang="siteTitle">Test World</a>
+        <a href="#home" class="logo" data-lang="siteTitle">각종 테스트</a>
         <div class="header-right">
             <div class="top-controls">
                 <div class="language-selector">
@@ -62,7 +63,7 @@
                     </a>
                 </div>
                  <div class="test-card">
-                    <a href="#">
+                    <a href="#fortune" class="nav-link" data-page="fortune-page">
                         <img src="https://via.placeholder.com/300x200.png?text=Fortune+Test" alt="운세">
                         <h3 data-lang="fortuneTitle">오늘의 운세</h3>
                     </a>
@@ -77,19 +78,13 @@
                 <div id="lotto-numbers" class="lotto-numbers-container"></div>
                 <button id="generate-btn" data-lang="generateButton">번호 생성</button>
             </div>
+            <!-- 각 페이지 하단에 댓글과 제휴 문의를 다시 배치 -->
             <div class="test-page-features">
                 <div class="disqus-container container">
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_lotto"></div>
                 </div>
-                <div class="contact-form-container container">
-                    <h2 data-lang="contactTitle">제휴 문의</h2>
-                    <form action="https://formspree.io/f/xaqdnqko" method="POST">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
-                        <button type="submit" data-lang="contactSubmit">문의 제출</button>
-                    </form>
-                </div>
+                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
         
@@ -104,22 +99,16 @@
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_mbti"></div>
                 </div>
-                <div class="contact-form-container container">
-                    <h2 data-lang="contactTitle">제휴 문의</h2>
-                    <form action="https://formspree.io/f/xaqdnqko" method="POST">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
-                        <button type="submit" data-lang="contactSubmit">문의 제출</button>
-                    </form>
-                </div>
+                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
-        <!-- 3. 연애스킬 테스트 페이지 (사용자 제공 테스트 로직 통합 예정) -->
+        <!-- 3. 연애스킬 테스트 페이지 -->
         <div id="love-skill-page" class="page-content" hidden>
             <div class="container test-game-container">
                 <h1 data-lang="loveSkillTitle">연애스킬 테스트</h1>
                 <div id="test-question-area">
+                    <img id="question-img" src="" alt="Question Image" hidden>
                     <h2 id="question"></h2>
                     <div id="answers"></div>
                 </div>
@@ -127,8 +116,8 @@
                     <h2 id="result-title"></h2>
                     <img id="result-img" width="200" alt="결과 이미지">
                     <p id="result-desc"></p>
-                    <button onclick="shareResult()" data-lang="shareResult">공유하기</button>
-                    <div id="ranking"></div>
+                    <button onclick="shareResult()" data-lang="shareResult">결과 공유</button>
+                    <!-- <div id="ranking"></div> --> <!-- 랭킹 기능은 잠시 제외 -->
                 </div>
                 <button id="start-love-skill-test" data-lang="startTest">테스트 시작</button>
             </div>
@@ -137,63 +126,67 @@
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_loveskill"></div>
                 </div>
-                <div class="contact-form-container container">
-                    <h2 data-lang="contactTitle">제휴 문의</h2>
-                    <form action="https://formspree.io/f/xaqdnqko" method="POST">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
-                        <button type="submit" data-lang="contactSubmit">문의 제출</button>
-                    </form>
-                </div>
+                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
         <!-- 4. 찐따력 테스트 페이지 -->
         <div id="loner-power-page" class="page-content" hidden>
-            <div class="container">
+            <div class="container test-game-container">
                 <h1 data-lang="lonerPowerTitle">찐따력 테스트</h1>
-                <p>찐따력 테스트 준비 중입니다.</p>
+                <div id="test-question-area-loner">
+                    <img id="question-img-loner" src="" alt="Question Image" hidden>
+                    <h2 id="question-loner"></h2>
+                    <div id="answers-loner"></div>
+                </div>
+                <div id="test-result-area-loner" hidden>
+                    <h2 id="result-title-loner"></h2>
+                    <img id="result-img-loner" width="200" alt="결과 이미지">
+                    <p id="result-desc-loner"></p>
+                    <button onclick="shareResult()" data-lang="shareResult">결과 공유</button>
+                </div>
+                <button id="start-loner-power-test" data-lang="startTest">테스트 시작</button>
             </div>
             <div class="test-page-features">
                 <div class="disqus-container container">
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_lonerpower"></div>
                 </div>
-                <div class="contact-form-container container">
-                    <h2 data-lang="contactTitle">제휴 문의</h2>
-                    <form action="https://formspree.io/f/xaqdnqko" method="POST">
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
-                        <button type="submit" data-lang="contactSubmit">문의 제출</button>
-                    </form>
+                <!-- 제휴문의 폼은 푸터로 이동 -->
+            </div>
+        </div>
+
+        <!-- 5. 오늘의 운세 페이지 -->
+        <div id="fortune-page" class="page-content" hidden>
+            <div class="container">
+                <h1 data-lang="fortuneTitle">오늘의 운세</h1>
+                <p id="fortune-result" style="font-size: 1.2rem; margin-top: 1.5rem;">오늘의 운세를 확인해 보세요!</p>
+                <button id="get-fortune-btn" data-lang="getFortune">운세 보기</button>
+            </div>
+            <div class="test-page-features">
+                <div class="disqus-container container">
+                    <h2 data-lang="commentTitle">댓글</h2>
+                    <div id="disqus_thread_fortune"></div>
                 </div>
+                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
     </main>
 
     <footer>
+        <div class="footer-contact">
+            <h4 data-lang="contactTitle">제휴 문의</h4>
+            <form action="https://formspree.io/f/xaqdnqko" method="POST">
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
+                <button type="submit" data-lang="contactSubmit">문의 제출</button>
+            </form>
+        </div>
         <p class="copyright">&copy; 2026 Test World. All rights reserved.</p>
     </footer>
 
-    <!-- Disqus embed script (로드할 때마다 실행되므로, 페이지별 스레드 ID 설정을 위해 main.js에서 로드하도록 변경 예정) -->
-    <!-- 현재는 여기에 남겨두지만, 추후 main.js에서 동적으로 로드 및 설정하도록 변경 필요 -->
-    <script>
-        /*
-        var disqus_config = function () {
-        this.page.url = PAGE_URL;
-        this.page.identifier = PAGE_IDENTIFIER;
-        };
-        */
-        (function() {
-        var d = document, s = d.createElement('script');
-        s.src = 'https://sgi217-2.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
+    <!-- Disqus embed script를 main.js에서 동적으로 로드하도록 변경 -->
     <script src="main.js"></script>
 </body>
 </html>
