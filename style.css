@@ -157,3 +157,70 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+
+/* Contact Form Styles */
+.contact-form-container {
+    margin-top: 2rem; /* 로또 생성기 컨테이너와 폼 사이 간격 */
+    text-align: left; /* 폼 요소들을 왼쪽 정렬 */
+}
+
+.contact-form-container h2 {
+    text-align: center;
+    color: var(--secondary-color); /* 다크모드에 맞춰 색상 변경 */
+    margin-bottom: 1.5rem;
+}
+
+.contact-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* 폼 요소들 사이 간격 */
+}
+
+.contact-form-container label {
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.contact-form-container input[type="text"],
+.contact-form-container input[type="email"],
+.contact-form-container textarea {
+    padding: 0.8rem;
+    border: 1px solid var(--secondary-color); /* 테마 색상에 맞춰 테두리 색상 변경 */
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: var(--primary-color); /* 테마 색상에 맞춰 배경 색상 변경 */
+    color: var(--secondary-color); /* 테마 색상에 맞춰 글자 색상 변경 */
+    transition: border-color 0.3s ease;
+}
+
+.contact-form-container input[type="text"]:focus,
+.contact-form-container input[type="email"]:focus,
+.contact-form-container textarea:focus {
+    border-color: var(--accent-color); /* 포커스 시 강조 색상 변경 */
+    outline: none;
+}
+
+.contact-form-container button[type="submit"] {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    align-self: center; /* 버튼을 중앙 정렬 */
+    width: fit-content; /* 내용에 맞춰 너비 조절 */
+}
+
+.contact-form-container button[type="submit"]:hover {
+    background-color: #3e8e41; /* Hover 효과 */
+    transform: translateY(-2px);
+}
+
+/* Dark Mode specific styles for form */
+body.dark-mode .contact-form-container input[type="text"],
+body.dark-mode .contact-form-container input[type="email"],
+body.dark-mode .contact-form-container textarea {
+    border: 1px solid #555; /* Darker border for dark mode */
+}
