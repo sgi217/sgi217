@@ -1,171 +1,109 @@
-// --- 1. CONFIG & DATA ---
+// 페이지 전환
+const navLinks=document.querySelectorAll(".nav-link");
+const pages=document.querySelectorAll(".page-content");
 
-const langData = {
-    "ko": {
-        "pageTitle": "Test World",
-        "siteTitle": "Test World",
-        "navHome": "홈",
-        "navLotto": "로또 추첨",
-        "navMbti": "MBTI 테스트",
-        "mbtiTitle": "MBTI 성격 테스트",
-        "horrorTitle": "공포 테스트",
-        "fortuneTitle": "오늘의 운세",
-        "lottoTitle": "로또 번호 생성기",
-        "generateButton": "번호 생성",
-        "contactTitle": "제휴 문의",
-        "contactSubmit": "문의 제출"
-    },
-    "en": {
-        "pageTitle": "Test World",
-        "siteTitle": "Test World",
-        "navHome": "Home",
-        "navLotto": "Lotto Draw",
-        "navMbti": "MBTI Test",
-        "mbtiTitle": "MBTI Personality Test",
-        "horrorTitle": "Horror Test",
-        "fortuneTitle": "Today's Fortune",
-        "lottoTitle": "Lotto Number Generator",
-        "generateButton": "Generate Numbers",
-        "contactTitle": "Partnership Inquiry",
-        "contactSubmit": "Submit"
-    }
+function showPage(id){
+pages.forEach(p=>p.hidden=p.id!==id);
+}
+
+navLinks.forEach(link=>{
+link.addEventListener("click",()=>{
+showPage(link.dataset.page);
+});
+});
+
+// 테스트 데이터
+const tests={
+animal:{
+questions:[
+{q:"연애할때 나는?",a:[
+{text:"직진",score:2},
+{text:"천천히",score:1}
+]}
+],
+results:[
+{min:0,title:"고양이",img:"https://picsum.photos/200",desc:"츤데레"},
+{min:2,title:"강아지",img:"https://picsum.photos/201",desc:"직진형"}
+]
+}
 };
 
+let currentTest=null;
+let step=0;
+let score=0;
 
-// --- 2. UI COMPONENTS & HELPERS ---
-
-// LottoBall Web Component
-class LottoBall extends HTMLElement {
-    constructor() { super(); this.attachShadow({ mode: 'open' }); }
-    connectedCallback() {
-        const number = this.getAttribute('number');
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host { --ball-color: hsl(${number * 20}, 70%, 50%); }
-                .ball {
-                    display: flex; justify-content: center; align-items: center;
-                    width: 50px; height: 50px; border-radius: 50%;
-                    background-color: var(--ball-color);
-                    color: white; font-size: 1.5rem; font-weight: bold;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 -3px 5px rgba(0,0,0,0.3);
-                }
-            </style>
-            <div class="ball">${number}</div>`;
-    }
-}
-customElements.define('lotto-ball', LottoBall);
-
-
-// --- 3. CORE LOGIC ---
-
-// Page-Navigation Logic
-const navLinks = document.querySelectorAll('.nav-link');
-const pageContents = document.querySelectorAll('.page-content');
-
-function showPage(pageId) {
-    pageContents.forEach(page => {
-        page.hidden = page.id !== pageId;
-    });
-    navLinks.forEach(link => {
-        link.classList.toggle('active', link.dataset.page === pageId);
-    });
+// 테스트 시작
+function startTest(name){
+currentTest=tests[name];
+step=0;
+score=0;
+showPage("test-page");
+renderQuestion();
 }
 
-function handleRouting() {
-    const hash = window.location.hash.substring(1);
-    const pageId = hash ? `${hash}-page` : 'home-page';
-    
-    // Check if the page exists, otherwise default to home
-    if (document.getElementById(pageId)) {
-        showPage(pageId);
-    } else {
-        showPage('home-page');
-    }
+// 질문 렌더
+function renderQuestion(){
+const q=currentTest.questions[step];
+document.getElementById("question").innerText=q.q;
+
+const ansDiv=document.getElementById("answers");
+ansDiv.innerHTML="";
+
+q.a.forEach(a=>{
+const btn=document.createElement("button");
+btn.innerText=a.text;
+btn.onclick=()=>{
+score+=a.score;
+step++;
+if(step>=currentTest.questions.length){
+showResult();
+}else{
+renderQuestion();
 }
-
-// Language Logic
-const languageSelect = document.getElementById('language-select');
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    document.querySelectorAll('[data-lang]').forEach(el => {
-        const key = el.dataset.lang;
-        if (langData[lang]?.[key]) {
-            el.textContent = langData[lang][key];
-        }
-    });
-    languageSelect.value = lang;
-}
-
-// Theme Logic
-const themeToggle = document.getElementById('checkbox');
-function applyTheme(theme) {
-    if (theme === 'dark-mode') {
-        document.body.classList.add('dark-mode');
-        themeToggle.checked = true;
-    } else {
-        document.body.classList.remove('dark-mode');
-        themeToggle.checked = false;
-    }
-}
-
-// Lotto Logic
-const generateBtn = document.getElementById('generate-btn');
-const lottoNumbersContainer = document.getElementById('lotto-numbers');
-function generateLottoNumbers() {
-    const numbers = new Set();
-    while (numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
-    }
-    return Array.from(numbers).sort((a, b) => a - b);
-}
-
-
-// --- 4. EVENT LISTENERS & INITIALIZATION ---
-
-// Navigation Listeners
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        // e.preventDefault(); // Optional: if you want to control history manually
-        const pageId = link.dataset.page;
-        showPage(pageId);
-    });
+};
+ansDiv.appendChild(btn);
 });
-window.addEventListener('hashchange', handleRouting);
+}
 
-// Lotto Listener
-generateBtn.addEventListener('click', () => {
-    lottoNumbersContainer.innerHTML = '';
-    const numbers = generateLottoNumbers();
-    numbers.forEach(number => {
-        const lottoBall = document.createElement('lotto-ball');
-        lottoBall.setAttribute('number', number);
-        lottoNumbersContainer.appendChild(lottoBall);
-    });
+// 결과
+function showResult(){
+showPage("result-page");
+
+let result=currentTest.results[0];
+currentTest.results.forEach(r=>{
+if(score>=r.min) result=r;
 });
 
-// Language Listener
-languageSelect.addEventListener('change', (e) => {
-    const selectedLang = e.target.value;
-    localStorage.setItem('language', selectedLang);
-    setLanguage(selectedLang);
-});
+document.getElementById("result-title").innerText=result.title;
+document.getElementById("result-img").src=result.img;
+document.getElementById("result-desc").innerText=result.desc;
 
-// Theme Listener
-themeToggle.addEventListener('change', () => {
-    const newTheme = themeToggle.checked ? 'dark-mode' : 'light-mode';
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
-});
-
-// Initialization on page load
-function initialize() {
-    const savedTheme = localStorage.getItem('theme') || 'light-mode';
-    applyTheme(savedTheme);
-    
-    const savedLang = localStorage.getItem('language') || (navigator.language.startsWith('ko') ? 'ko' : 'en');
-    setLanguage(savedLang);
-
-    handleRouting(); // Show the correct page on load
+saveRanking(result.title);
 }
 
-document.addEventListener('DOMContentLoaded', initialize);
+// 공유
+function shareResult(){
+navigator.clipboard.writeText(location.href);
+alert("링크 복사됨");
+}
+
+// 랭킹
+function saveRanking(name){
+let rank=JSON.parse(localStorage.getItem("rank")||"{}");
+rank[name]=(rank[name]||0)+1;
+localStorage.setItem("rank",JSON.stringify(rank));
+renderRanking();
+}
+
+function renderRanking(){
+let rank=JSON.parse(localStorage.getItem("rank")||"{}");
+let html="<h3>인기 결과</h3>";
+
+Object.entries(rank)
+.sort((a,b)=>b[1]-a[1])
+.forEach(r=>{
+html+=`<p>${r[0]} (${r[1]})</p>`;
+});
+
+document.getElementById("ranking").innerHTML=html;
+}
