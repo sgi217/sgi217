@@ -3,69 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-lang="pageTitle">로또 번호 생성기</title>
+    <title data-lang="pageTitle">메인 페이지</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="top-controls">
-        <div class="theme-switch-wrapper">
-            <label class="theme-switch" for="checkbox">
-                <input type="checkbox" id="checkbox" />
-                <div class="slider round"></div>
-            </label>
+    <header>
+        <a href="#" class="logo" data-lang="siteTitle">Test World</a>
+        <nav>
+            <ul>
+                <li><a href="#home" class="nav-link active" data-page="home-page" data-lang="navHome">홈</a></li>
+                <li><a href="#lotto" class="nav-link" data-page="lotto-page" data-lang="navLotto">로또 추첨</a></li>
+                <li><a href="#mbti" class="nav-link" data-page="mbti-page" data-lang="navMbti">MBTI 테스트</a></li>
+            </ul>
+        </nav>
+        <div class="top-controls">
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">
+                    <input type="checkbox" id="checkbox" />
+                    <div class="slider round"></div>
+                </label>
+            </div>
+            <div class="language-selector">
+                <select id="language-select">
+                    <option value="ko">한국어</option>
+                    <option value="en">English</option>
+                </select>
+            </div>
         </div>
-        <div class="language-selector">
-            <select id="language-select">
-                <option value="ko">한국어</option>
-                <option value="en">English</option>
-            </select>
-        </div>
-    </div>
+    </header>
 
     <main>
-        <!-- 1. 로또 번호 생성기 -->
-        <div class="container">
-            <h1 data-lang="lottoTitle">로또 번호 생성기</h1>
-            <div id="lotto-numbers" class="lotto-numbers-container"></div>
-            <button id="generate-btn" data-lang="generateButton">번호 생성</button>
+        <!-- 1. 홈 - 테스트 그리드 -->
+        <div id="home-page" class="page-content">
+            <div class="grid-container">
+                <div class="test-card">
+                    <a href="#mbti" class="nav-link" data-page="mbti-page">
+                        <img src="https://via.placeholder.com/300x200.png?text=MBTI+Test" alt="MBTI 테스트">
+                        <h3 data-lang="mbtiTitle">MBTI 성격 테스트</h3>
+                    </a>
+                </div>
+                <div class="test-card">
+                    <a href="#">
+                        <img src="https://via.placeholder.com/300x200.png?text=Horror+Test" alt="공포 테스트">
+                        <h3 data-lang="horrorTitle">공포 테스트</h3>
+                    </a>
+                </div>
+                <div class="test-card">
+                    <a href="#">
+                        <img src="https://via.placeholder.com/300x200.png?text=Fortune+Test" alt="운세">
+                        <h3 data-lang="fortuneTitle">오늘의 운세</h3>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- 2. Disqus 댓글 섹션 -->
-        <div class="container disqus-container">
-            <h2 data-lang="commentTitle">댓글</h2>
-            <div id="disqus_thread"></div>
+        <!-- 2. 로또 추첨 페이지 (숨김) -->
+        <div id="lotto-page" class="page-content" hidden>
+             <div class="container">
+                <h1 data-lang="lottoTitle">로또 번호 생성기</h1>
+                <div id="lotto-numbers" class="lotto-numbers-container"></div>
+                <button id="generate-btn" data-lang="generateButton">번호 생성</button>
+            </div>
         </div>
-
-        <!-- 3. 제휴 문의 폼 -->
-        <div class="container contact-form-container">
-            <h2 data-lang="contactTitle">제휴 문의</h2>
-            <form action="https://formspree.io/f/xaqdnqko" method="POST">
-                <label for="name" data-lang="contactName">이름:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="email" data-lang="contactEmail">이메일:</label>
-                <input type="email" id="email" name="email" required>
-
-                <label for="message" data-lang="contactMessage">문의 내용:</label>
-                <textarea id="message" name="message" rows="5" required></textarea>
-
-                <button type="submit" data-lang="contactSubmit">문의 제출</button>
-            </form>
+        
+        <!-- 3. MBTI 테스트 페이지 (숨김) -->
+        <div id="mbti-page" class="page-content" hidden>
+            <div class="container">
+                <h1 data-lang="mbtiTitle">MBTI 성격 테스트</h1>
+                <p>MBTI 테스트 준비 중입니다.</p>
+            </div>
         </div>
     </main>
 
+    <footer>
+        <div class="footer-contact">
+            <h4 data-lang="contactTitle">제휴 문의</h4>
+            <form action="https://formspree.io/f/xaqdnqko" method="POST">
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="2" placeholder="Your Message" required></textarea>
+                <button type="submit" data-lang="contactSubmit">문의 제출</button>
+            </form>
+        </div>
+        <div class="disqus-container">
+            <div id="disqus_thread"></div>
+        </div>
+        <p class="copyright">&copy; 2026 Test World. All rights reserved.</p>
+    </footer>
+
     <script>
-        /**
-        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-        /*
-        var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-        };
-        */
-        (function() { // DON'T EDIT BELOW THIS LINE
+        (function() {
         var d = document, s = d.createElement('script');
         s.src = 'https://sgi217-2.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());

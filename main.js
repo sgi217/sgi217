@@ -1,53 +1,102 @@
-// LottoBall Web Component (기존 코드 유지)
-class LottoBall extends HTMLElement {
-    constructor() {
-        super();
-        this.attachShadow({ mode: 'open' });
+// --- 1. CONFIG & DATA ---
+
+const langData = {
+    "ko": {
+        "pageTitle": "Test World",
+        "siteTitle": "Test World",
+        "navHome": "홈",
+        "navLotto": "로또 추첨",
+        "navMbti": "MBTI 테스트",
+        "mbtiTitle": "MBTI 성격 테스트",
+        "horrorTitle": "공포 테스트",
+        "fortuneTitle": "오늘의 운세",
+        "lottoTitle": "로또 번호 생성기",
+        "generateButton": "번호 생성",
+        "contactTitle": "제휴 문의",
+        "contactSubmit": "문의 제출"
+    },
+    "en": {
+        "pageTitle": "Test World",
+        "siteTitle": "Test World",
+        "navHome": "Home",
+        "navLotto": "Lotto Draw",
+        "navMbti": "MBTI Test",
+        "mbtiTitle": "MBTI Personality Test",
+        "horrorTitle": "Horror Test",
+        "fortuneTitle": "Today's Fortune",
+        "lottoTitle": "Lotto Number Generator",
+        "generateButton": "Generate Numbers",
+        "contactTitle": "Partnership Inquiry",
+        "contactSubmit": "Submit"
     }
+};
+
+
+// --- 2. UI COMPONENTS & HELPERS ---
+
+// LottoBall Web Component
+class LottoBall extends HTMLElement {
+    constructor() { super(); this.attachShadow({ mode: 'open' }); }
     connectedCallback() {
         const number = this.getAttribute('number');
         this.shadowRoot.innerHTML = `
             <style>
+                :host { --ball-color: hsl(${number * 20}, 70%, 50%); }
                 .ball {
-                    display: flex; justifyContent: center; align-items: center;
+                    display: flex; justify-content: center; align-items: center;
                     width: 50px; height: 50px; border-radius: 50%;
-                    background-color: var(--ball-color-${Math.ceil(number / 4.5)});
+                    background-color: var(--ball-color);
                     color: white; font-size: 1.5rem; font-weight: bold;
                     box-shadow: 0 4px 8px rgba(0,0,0,0.2), inset 0 -3px 5px rgba(0,0,0,0.3);
-                    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
                 }
             </style>
-            <div class="ball">${number}</div>
-        `;
+            <div class="ball">${number}</div>`;
     }
 }
 customElements.define('lotto-ball', LottoBall);
 
 
-// 로또 번호 생성 로직 (기존 코드 유지)
-const generateBtn = document.getElementById('generate-btn');
-const lottoNumbersContainer = document.getElementById('lotto-numbers');
+// --- 3. CORE LOGIC ---
 
-generateBtn.addEventListener('click', () => {
-    lottoNumbersContainer.innerHTML = '';
-    const numbers = generateLottoNumbers();
-    numbers.forEach(number => {
-        const lottoBall = document.createElement('lotto-ball');
-        lottoBall.setAttribute('number', number);
-        lottoNumbersContainer.appendChild(lottoBall);
+// Page-Navigation Logic
+const navLinks = document.querySelectorAll('.nav-link');
+const pageContents = document.querySelectorAll('.page-content');
+
+function showPage(pageId) {
+    pageContents.forEach(page => {
+        page.hidden = page.id !== pageId;
     });
-});
-
-function generateLottoNumbers() {
-    const numbers = new Set();
-    while (numbers.size < 6) {
-        numbers.add(Math.floor(Math.random() * 45) + 1);
-    }
-    return Array.from(numbers).sort((a, b) => a - b);
+    navLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.page === pageId);
+    });
 }
 
+function handleRouting() {
+    const hash = window.location.hash.substring(1);
+    const pageId = hash ? `${hash}-page` : 'home-page';
+    
+    // Check if the page exists, otherwise default to home
+    if (document.getElementById(pageId)) {
+        showPage(pageId);
+    } else {
+        showPage('home-page');
+    }
+}
 
-// 테마 변경 로직 (기존 코드 유지)
+// Language Logic
+const languageSelect = document.getElementById('language-select');
+function setLanguage(lang) {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-lang]').forEach(el => {
+        const key = el.dataset.lang;
+        if (langData[lang]?.[key]) {
+            el.textContent = langData[lang][key];
+        }
+    });
+    languageSelect.value = lang;
+}
+
+// Theme Logic
 const themeToggle = document.getElementById('checkbox');
 function applyTheme(theme) {
     if (theme === 'dark-mode') {
@@ -58,70 +107,65 @@ function applyTheme(theme) {
         themeToggle.checked = false;
     }
 }
-themeToggle.addEventListener('change', () => {
-    const newTheme = themeToggle.checked ? 'dark-mode' : 'light-mode';
-    localStorage.setItem('theme', newTheme);
-    applyTheme(newTheme);
-});
 
-
-// --- 새로운 언어 변경 로직 ---
-const languageSelect = document.getElementById('language-select');
-
-const langData = {
-    "ko": {
-        "pageTitle": "로또 번호 생성기",
-        "lottoTitle": "로또 번호 생성기",
-        "generateButton": "번호 생성",
-        "commentTitle": "댓글",
-        "contactTitle": "제휴 문의",
-        "contactName": "이름:",
-        "contactEmail": "이메일:",
-        "contactMessage": "문의 내용:",
-        "contactSubmit": "문의 제출"
-    },
-    "en": {
-        "pageTitle": "Lotto Number Generator",
-        "lottoTitle": "Lotto Number Generator",
-        "generateButton": "Generate Numbers",
-        "commentTitle": "Comments",
-        "contactTitle": "Partnership Inquiry",
-        "contactName": "Name:",
-        "contactEmail": "Email:",
-        "contactMessage": "Message:",
-        "contactSubmit": "Submit"
+// Lotto Logic
+const generateBtn = document.getElementById('generate-btn');
+const lottoNumbersContainer = document.getElementById('lotto-numbers');
+function generateLottoNumbers() {
+    const numbers = new Set();
+    while (numbers.size < 6) {
+        numbers.add(Math.floor(Math.random() * 45) + 1);
     }
-};
-
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    const elements = document.querySelectorAll('[data-lang]');
-    elements.forEach(el => {
-        const key = el.getAttribute('data-lang');
-        if (langData[lang] && langData[lang][key]) {
-            el.textContent = langData[lang][key];
-        }
-    });
-    languageSelect.value = lang;
+    return Array.from(numbers).sort((a, b) => a - b);
 }
 
+
+// --- 4. EVENT LISTENERS & INITIALIZATION ---
+
+// Navigation Listeners
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        // e.preventDefault(); // Optional: if you want to control history manually
+        const pageId = link.dataset.page;
+        showPage(pageId);
+    });
+});
+window.addEventListener('hashchange', handleRouting);
+
+// Lotto Listener
+generateBtn.addEventListener('click', () => {
+    lottoNumbersContainer.innerHTML = '';
+    const numbers = generateLottoNumbers();
+    numbers.forEach(number => {
+        const lottoBall = document.createElement('lotto-ball');
+        lottoBall.setAttribute('number', number);
+        lottoNumbersContainer.appendChild(lottoBall);
+    });
+});
+
+// Language Listener
 languageSelect.addEventListener('change', (e) => {
     const selectedLang = e.target.value;
     localStorage.setItem('language', selectedLang);
     setLanguage(selectedLang);
 });
 
+// Theme Listener
+themeToggle.addEventListener('change', () => {
+    const newTheme = themeToggle.checked ? 'dark-mode' : 'light-mode';
+    localStorage.setItem('theme', newTheme);
+    applyTheme(newTheme);
+});
 
-// --- 초기화 로직 ---
+// Initialization on page load
 function initialize() {
-    // 테마 초기화
     const savedTheme = localStorage.getItem('theme') || 'light-mode';
     applyTheme(savedTheme);
     
-    // 언어 초기화
     const savedLang = localStorage.getItem('language') || (navigator.language.startsWith('ko') ? 'ko' : 'en');
     setLanguage(savedLang);
+
+    handleRouting(); // Show the correct page on load
 }
 
-// 페이지 로드 시 초기화 실행
 document.addEventListener('DOMContentLoaded', initialize);

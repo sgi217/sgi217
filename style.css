@@ -1,202 +1,224 @@
 :root {
-    --primary-color: #f0f0f0;
-    --secondary-color: #333;
-    --accent-color: #4CAF50;
-    --background-color: #f9f9f9;
+    --background-color: #f4f7f6;
+    --text-color: #333;
+    --primary-color: #ffffff;
+    --accent-color: #007bff;
+    --accent-hover-color: #0056b3;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --background-color: #121212;
+    --text-color: #e0e0e0;
+    --primary-color: #1e1e1e;
+    --accent-color: #66bb6a;
+    --accent-hover-color: #81c784;
+    --shadow-color: rgba(0, 0, 0, 0.5);
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: var(--background-color);
-    color: var(--secondary-color);
+    color: var(--text-color);
     margin: 0;
-    padding: 5rem 1rem 2rem 1rem; /* top, right, bottom, left */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding-top: 80px; /* 헤더 높이만큼 패딩 */
+    transition: background-color 0.3s, color 0.3s;
 }
 
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    width: 100%;
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.container {
-    text-align: center;
-    padding: 2rem;
+/* Header */
+header {
     background-color: var(--primary-color);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.06);
-    width: 90%;
-    max-width: 700px; /* 컨테이너 최대 너비 약간 증가 */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-h1, h2 {
-    color: var(--accent-color);
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-}
-
-.lotto-numbers-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-#generate-btn {
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
-}
-
-#generate-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
-}
-
-/* 오른쪽 상단 컨트롤 영역 */
-.top-controls {
+    box-shadow: 0 2px 4px var(--shadow-color);
     position: fixed;
-    top: 1rem;
-    right: 1.5rem;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    justify-content: space-between;
+    padding: 0 2rem;
     z-index: 1000;
 }
 
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+header nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+header nav a {
+    font-weight: 500;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+header nav a:hover, header nav a.active {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.top-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
 .language-selector select {
-    padding: 0.5rem;
+    background-color: transparent;
+    color: var(--text-color);
+    border: 1px solid #555;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
+    padding: 0.3rem;
 }
 
-
-/* Dark Mode Styles */
-body.dark-mode {
-    --primary-color: #2a2a2a;
-    --secondary-color: #e0e0e0;
-    --background-color: #121212;
-    --accent-color: #66bb6a;
+.theme-switch { /* 기존 스타일 재활용 */
+    position: relative; display: inline-block;
+    width: 50px; height: 28px;
 }
-
-.dark-mode .container {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 1px 8px rgba(0, 0, 0, 0.4);
-}
-
-/* Theme Switch Styles */
-.theme-switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
 .theme-switch input { opacity: 0; width: 0; height: 0; }
-
 .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #555;
-    transition: .4s;
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc; transition: .4s;
 }
-
 .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
+    position: absolute; content: ""; height: 20px; width: 20px;
+    left: 4px; bottom: 4px; background-color: white; transition: .4s;
 }
-
 input:checked + .slider { background-color: var(--accent-color); }
-input:focus + .slider { box-shadow: 0 0 1px var(--accent-color); }
-input:checked + .slider:before { transform: translateX(26px); }
-.slider.round { border-radius: 34px; }
+input:checked + .slider:before { transform: translateX(22px); }
+.slider.round { border-radius: 28px; }
 .slider.round:before { border-radius: 50%; }
 
-/* Contact Form & Disqus Styles */
-.contact-form-container, .disqus-container {
-    text-align: left;
+/* Main Content */
+main {
+    padding: 2rem;
 }
-.disqus-container h2, .contact-form-container h2 {
+
+.page-content {
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.test-card {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--shadow-color);
+}
+
+.test-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.test-card h3 {
+    margin: 0;
+    padding: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Lotto Page (기존 .container 재활용) */
+.container {
+    text-align: center; padding: 2rem; background-color: var(--primary-color);
+    border-radius: 15px; box-shadow: 0 10px 30px var(--shadow-color);
+    width: 90%; max-width: 700px; margin: 0 auto;
+}
+.lotto-numbers-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
+#generate-btn { /* 기존 스타일 재활용 */
+    background-color: var(--accent-color); color: white; border: none;
+    padding: 1rem 2rem; font-size: 1.2rem; border-radius: 8px; cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    padding: 2rem;
+    margin-top: 4rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+    box-shadow: 0 -2px 4px var(--shadow-color);
 }
 
-.contact-form-container form {
+.footer-contact {
+    max-width: 500px;
+    margin: 0 auto 2rem auto;
+}
+
+.footer-contact h4 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.footer-contact form {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    gap: 0.5rem;
+    align-items: center;
 }
 
-.contact-form-container label {
-    font-weight: bold;
-    color: var(--secondary-color);
-}
-
-.contact-form-container input[type="text"],
-.contact-form-container input[type="email"],
-.contact-form-container textarea {
-    padding: 0.8rem;
+.footer-contact input, .footer-contact textarea {
+    flex-grow: 1;
     border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1rem;
-    background-color: var(--primary-color);
-    color: var(--secondary-color);
-    transition: border-color 0.3s ease;
+    padding: 0.5rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
+.footer-contact textarea { resize: vertical; }
 
-.contact-form-container input[type="text"]:focus,
-.contact-form-container input[type="email"]:focus,
-.contact-form-container textarea:focus {
-    border-color: var(--accent-color);
-    outline: none;
-}
-
-.contact-form-container button[type="submit"] {
+.footer-contact button {
     background-color: var(--accent-color);
     color: white;
     border: none;
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
-    border-radius: 8px;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    align-self: center;
-    width: fit-content;
+    transition: background-color 0.3s;
+}
+.footer-contact button:hover { background-color: var(--accent-hover-color); }
+
+.disqus-container {
+    max-width: 900px;
+    margin: 2rem auto;
 }
 
-.contact-form-container button[type="submit"]:hover {
-    transform: translateY(-2px);
+.copyright {
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    opacity: 0.7;
 }
 
-/* Dark Mode 가독성 개선 및 스타일 */
-body.dark-mode .contact-form-container label {
-    color: #e0e0e0;
-}
-
-body.dark-mode .contact-form-container input,
-body.dark-mode .contact-form-container textarea,
-body.dark-mode .language-selector select {
-    border-color: #777;
-}
-
-body.dark-mode .contact-form-container button[type="submit"]:hover {
-    background-color: #81c784; /* lighter green */
+/* LottoBall은 그대로 유지 */
+body.dark-mode .ball {
+    /* 다크모드에서 볼 스타일 변경이 필요하면 여기에 추가 */
 }
