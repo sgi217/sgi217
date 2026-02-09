@@ -21,7 +21,7 @@
                 </ul>
             </nav>
         </div>
-        <a href="#home" class="logo" data-lang="siteTitle">각종 테스트</a>
+        <a href="#home" class="logo" data-lang="mainSiteTitle">각종 테스트</a>
         <div class="header-right">
             <div class="top-controls">
                 <div class="language-selector">
@@ -78,13 +78,11 @@
                 <div id="lotto-numbers" class="lotto-numbers-container"></div>
                 <button id="generate-btn" data-lang="generateButton">번호 생성</button>
             </div>
-            <!-- 각 페이지 하단에 댓글과 제휴 문의를 다시 배치 -->
             <div class="test-page-features">
                 <div class="disqus-container container">
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_lotto"></div>
                 </div>
-                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
         
@@ -99,34 +97,31 @@
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_mbti"></div>
                 </div>
-                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
-        <!-- 3. 연애스킬 테스트 페이지 -->
+        <!-- 3. 연애스킬 테스트 페이지 (사용자 제공 테스트 로직 통합 예정) -->
         <div id="love-skill-page" class="page-content" hidden>
             <div class="container test-game-container">
                 <h1 data-lang="loveSkillTitle">연애스킬 테스트</h1>
-                <div id="test-question-area">
-                    <img id="question-img" src="" alt="Question Image" hidden>
-                    <h2 id="question"></h2>
-                    <div id="answers"></div>
+                <div id="test-question-area-loveSkill">
+                    <img id="question-img-loveSkill" src="" alt="Question Image" hidden>
+                    <h2 id="question-loveSkill"></h2>
+                    <div id="answers-loveSkill"></div>
                 </div>
-                <div id="test-result-area" hidden>
-                    <h2 id="result-title"></h2>
-                    <img id="result-img" width="200" alt="결과 이미지">
-                    <p id="result-desc"></p>
+                <div id="test-result-area-loveSkill" hidden>
+                    <h2 id="result-title-loveSkill"></h2>
+                    <img id="result-img-loveSkill" width="200" alt="결과 이미지">
+                    <p id="result-desc-loveSkill"></p>
                     <button onclick="shareResult()" data-lang="shareResult">결과 공유</button>
-                    <!-- <div id="ranking"></div> --> <!-- 랭킹 기능은 잠시 제외 -->
                 </div>
                 <button id="start-love-skill-test" data-lang="startTest">테스트 시작</button>
             </div>
             <div class="test-page-features">
                 <div class="disqus-container container">
                     <h2 data-lang="commentTitle">댓글</h2>
-                    <div id="disqus_thread_loveskill"></div>
+                    <div id="disqus_thread_loveSkill"></div>
                 </div>
-                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
@@ -134,15 +129,15 @@
         <div id="loner-power-page" class="page-content" hidden>
             <div class="container test-game-container">
                 <h1 data-lang="lonerPowerTitle">찐따력 테스트</h1>
-                <div id="test-question-area-loner">
-                    <img id="question-img-loner" src="" alt="Question Image" hidden>
-                    <h2 id="question-loner"></h2>
-                    <div id="answers-loner"></div>
+                <div id="test-question-area-lonerPower">
+                    <img id="question-img-lonerPower" src="" alt="Question Image" hidden>
+                    <h2 id="question-lonerPower"></h2>
+                    <div id="answers-lonerPower"></div>
                 </div>
-                <div id="test-result-area-loner" hidden>
-                    <h2 id="result-title-loner"></h2>
-                    <img id="result-img-loner" width="200" alt="결과 이미지">
-                    <p id="result-desc-loner"></p>
+                <div id="test-result-area-lonerPower" hidden>
+                    <h2 id="result-title-lonerPower"></h2>
+                    <img id="result-img-lonerPower" width="200" alt="결과 이미지">
+                    <p id="result-desc-lonerPower"></p>
                     <button onclick="shareResult()" data-lang="shareResult">결과 공유</button>
                 </div>
                 <button id="start-loner-power-test" data-lang="startTest">테스트 시작</button>
@@ -150,9 +145,8 @@
             <div class="test-page-features">
                 <div class="disqus-container container">
                     <h2 data-lang="commentTitle">댓글</h2>
-                    <div id="disqus_thread_lonerpower"></div>
+                    <div id="disqus_thread_lonerPower"></div>
                 </div>
-                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
@@ -168,7 +162,6 @@
                     <h2 data-lang="commentTitle">댓글</h2>
                     <div id="disqus_thread_fortune"></div>
                 </div>
-                <!-- 제휴문의 폼은 푸터로 이동 -->
             </div>
         </div>
 
@@ -186,7 +179,7 @@
         <p class="copyright">&copy; 2026 Test World. All rights reserved.</p>
     </footer>
 
-    <!-- Disqus embed script를 main.js에서 동적으로 로드하도록 변경 -->
+    <!-- Disqus embed script는 main.js에서 동적으로 로드 -->
     <script src="main.js"></script>
 </body>
 </html>
