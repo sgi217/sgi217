@@ -397,3 +397,22 @@ function initialize() {
 }
 
 document.addEventListener('DOMContentLoaded', initialize);
+
+function saveRanking(title){
+    let rank=JSON.parse(localStorage.getItem("rank")||"{}");
+    rank[title]=(rank[title]||0)+1;
+    localStorage.setItem("rank",JSON.stringify(rank));
+    }
+    
+    function increaseView(page){
+    let view=JSON.parse(localStorage.getItem("views")||"{}");
+    view[page]=(view[page]||0)+1;
+    localStorage.setItem("views",JSON.stringify(view));
+    }
+    
+    const oldShowPage=showPage;
+    showPage=function(pageId){
+    increaseView(pageId);
+    oldShowPage(pageId);
+    }
+    
