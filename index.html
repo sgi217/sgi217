@@ -24,12 +24,20 @@
     </div>
 
     <main>
+        <!-- 1. 로또 번호 생성기 -->
         <div class="container">
             <h1 data-lang="lottoTitle">로또 번호 생성기</h1>
             <div id="lotto-numbers" class="lotto-numbers-container"></div>
             <button id="generate-btn" data-lang="generateButton">번호 생성</button>
         </div>
 
+        <!-- 2. Disqus 댓글 섹션 -->
+        <div class="container disqus-container">
+            <h2 data-lang="commentTitle">댓글</h2>
+            <div id="disqus_thread"></div>
+        </div>
+
+        <!-- 3. 제휴 문의 폼 -->
         <div class="container contact-form-container">
             <h2 data-lang="contactTitle">제휴 문의</h2>
             <form action="https://formspree.io/f/xaqdnqko" method="POST">
@@ -47,28 +55,24 @@
         </div>
     </main>
 
-    <!-- Disqus 댓글 섹션 -->
-    <div class="container disqus-container">
-        <div id="disqus_thread"></div>
-        <script>
-            /**
-            *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-            *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-            /*
-            var disqus_config = function () {
-            this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-            this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-            };
-            */
-            (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            s.src = 'https://sgi217-2.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://sgi217-2.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
     <script src="main.js"></script>
 </body>

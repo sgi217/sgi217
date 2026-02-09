@@ -10,7 +10,7 @@ body {
     background-color: var(--background-color);
     color: var(--secondary-color);
     margin: 0;
-    padding-top: 5rem; /* top-controls의 높이를 고려한 패딩 */
+    padding: 5rem 1rem 2rem 1rem; /* top, right, bottom, left */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -29,7 +29,7 @@ main {
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.06);
     width: 90%;
-    max-width: 600px; /* 컨테이너 최대 너비 제한 */
+    max-width: 700px; /* 컨테이너 최대 너비 약간 증가 */
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -67,10 +67,10 @@ h1, h2 {
 .top-controls {
     position: fixed;
     top: 1rem;
-    right: 1rem;
+    right: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     z-index: 1000;
 }
 
@@ -85,14 +85,14 @@ h1, h2 {
 
 /* Dark Mode Styles */
 body.dark-mode {
-    --primary-color: #333;
-    --secondary-color: #f0f0f0;
-    --background-color: #222;
+    --primary-color: #2a2a2a;
+    --secondary-color: #e0e0e0;
+    --background-color: #121212;
     --accent-color: #66bb6a;
 }
 
 .dark-mode .container {
-    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1), 0 1px 8px rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 1px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* Theme Switch Styles */
@@ -103,20 +103,13 @@ body.dark-mode {
     height: 34px;
 }
 
-.theme-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
+.theme-switch input { opacity: 0; width: 0; height: 0; }
 
 .slider {
     position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #555;
     transition: .4s;
 }
 
@@ -131,32 +124,17 @@ body.dark-mode {
     transition: .4s;
 }
 
-input:checked + .slider {
-    background-color: var(--accent-color);
-}
+input:checked + .slider { background-color: var(--accent-color); }
+input:focus + .slider { box-shadow: 0 0 1px var(--accent-color); }
+input:checked + .slider:before { transform: translateX(26px); }
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
 
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--accent-color);
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
-/* Contact Form Styles */
-.contact-form-container {
+/* Contact Form & Disqus Styles */
+.contact-form-container, .disqus-container {
     text-align: left;
 }
-
-.contact-form-container h2 {
+.disqus-container h2, .contact-form-container h2 {
     text-align: center;
     margin-bottom: 1.5rem;
 }
@@ -205,13 +183,20 @@ input:checked + .slider:before {
 }
 
 .contact-form-container button[type="submit"]:hover {
-    background-color: #3e8e41;
     transform: translateY(-2px);
 }
 
-/* Dark Mode specific styles for form */
+/* Dark Mode 가독성 개선 및 스타일 */
+body.dark-mode .contact-form-container label {
+    color: #e0e0e0;
+}
+
 body.dark-mode .contact-form-container input,
 body.dark-mode .contact-form-container textarea,
 body.dark-mode .language-selector select {
-    border: 1px solid #555;
+    border-color: #777;
+}
+
+body.dark-mode .contact-form-container button[type="submit"]:hover {
+    background-color: #81c784; /* lighter green */
 }
